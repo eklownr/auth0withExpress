@@ -11,28 +11,28 @@ app.use(authMiddleware);
 
 app.use(express.json());
 app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  }),
+	cors({
+		origin: "http://localhost:5173",
+		credentials: true,
+	}),
 );
 
-// app.get("/", (req, res) => {
-//   console.log("profile...")
-//   return res.oidc.login({ returnTo: "http://localhost:5173/profile" });
-// });
-
 // Home route - public
-app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+app.get("/", (req, res) => {
+	console.log("profile...");
+	return res.oidc.login({ returnTo: "http://localhost:5173/profile" });
 });
 
+// app.get('/', (req, res) => {
+//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+// });
+
 app.get("/profile", requiresAuth(), (req, res) => {
-  try {
-    res.json(req.oidc.user);
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		res.json(req.oidc.user);
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 // Protected route
