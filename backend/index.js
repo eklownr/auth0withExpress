@@ -16,8 +16,14 @@ app.use(
   }),
 );
 
-app.get("/", (req, res) => {
-  return res.oidc.login({ returnTo: "http://localhost:5173/profile" });
+// app.get("/", (req, res) => {
+//   console.log("profile...")
+//   return res.oidc.login({ returnTo: "http://localhost:5173/profile" });
+// });
+
+// Home route - public
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
 app.get("/profile", requiresAuth(), (req, res) => {
@@ -36,5 +42,5 @@ app.get("/profile", requiresAuth(), (req, res) => {
 //   });
 // });
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
