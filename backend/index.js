@@ -1,11 +1,12 @@
 // backend/index.js
 import express from "express";
 import { authMiddleware } from "./middleware/auth.js";
-import pkg from "express-openid-connect";
+//import pkg from "express-openid-connect";
 import cors from "cors";
 
-const { requiresAuth } = pkg;
+//const { requiresAuth } = pkg;
 const app = express();
+
 app.use(authMiddleware);
 
 app.use(express.json());
@@ -26,7 +27,9 @@ app.get('/', (req, res) => {
   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
-app.get("/profile", requiresAuth(), (req, res) => {
+app.get("/profile", 
+  //requiresAuth(), 
+  (req, res) => {
   try {
     res.json(req.oidc.user);
   } catch (error) {
